@@ -27,7 +27,7 @@ body {
 .main {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 1000px;
     width: 100%;
     overflow: hidden;
     transition: all 0.35s ease-in-out;

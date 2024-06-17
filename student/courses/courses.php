@@ -66,7 +66,7 @@ $stmt->close();
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg main-color">
+<nav class="navbar navbar-expand-lg main-color">
         <div class="container">
             <a class="navbar-brand" href="#">Techion</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +75,7 @@ $stmt->close();
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item me-3">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="../homepage.php">Home</a>
                     </li>
                     <li class="nav-item me-3">
                         <a class="nav-link" href="../articles/article.php">Article</a>
@@ -83,21 +83,18 @@ $stmt->close();
                     <li class="nav-item me-3">
                         <a class="nav-link" href="#">Video Content</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Course</a>
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="../forum-discussion/discussion.php">Discussion</a>
                     </li>
-                    <li class="nav-item dropdown me-3">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="myCourse.php">My course</a></li>
-                        </ul>
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="../courses/courses.php">Courses</a>
                     </li>
                     <li class="nav-item dropdown me-3">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <?php echo $userName ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#"></i>Logout</a></li>
+                            <li><a class="dropdown-item" href="../../logout.php"></i>Logout</a></li>
                         </ul>
                     </li>
                 </ul>

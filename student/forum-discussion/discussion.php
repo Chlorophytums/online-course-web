@@ -1,5 +1,22 @@
 <?php
 require("../../koneksi.php");
+include("../../middleware/session.php");
+checkLoginStudent();
+
+$email = $_SESSION['email'];
+$query = "SELECT name FROM tbl_users WHERE email = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $userName = $row['name'];
+} else {
+    // Jika tidak ada data user, handle sesuai kebutuhan
+    $userName = "User";
+}
 
 $query = "SELECT fm.id, fm.user_id, fm.message, fm.created_at, u.name 
             FROM tbl_forum_messages fm
@@ -69,13 +86,27 @@ $conn->close();
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item me-3">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="../homepage.php">Home</a>
                     </li>
                     <li class="nav-item me-3">
-                        <a class="nav-link" href="#">Forum</a>
+                        <a class="nav-link" href="../articles/article.php">Article</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../logout.php">Logout</a>
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="#">Video Content</a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="discussion.php">Discussion</a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="../courses/courses.php">Courses</a>
+                    </li>
+                    <li class="nav-item dropdown me-3">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?php echo $userName ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="../../logout.php"></i>Logout</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -86,6 +117,9 @@ $conn->close();
     <!-- MAIN CONTENT -->
     <div class="container mt-4">
         <h2>Discussion</h2>
+        <div class="text-end mb-3">
+            <a href="addMessage.php" class="btn btn-primary">Send Message</a>
+        </div>
         <?php foreach ($messages as $message) : ?>
             <div class="card">
                 <div class="card-body">

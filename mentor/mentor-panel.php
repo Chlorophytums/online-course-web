@@ -1,8 +1,22 @@
 <?php
+require("../koneksi.php");
 include(".././middleware/session.php");
-include("sidebar.php");
 checkLoginMentor();
 
+$email = $_SESSION['email'];
+$query = "SELECT name FROM tbl_users WHERE email = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $userName = $row['name'];
+} else {
+    // Jika tidak ada data user, handle sesuai kebutuhan
+    $userName = "User";
+}
 ?>
 
 <!DOCTYPE html>
@@ -24,13 +38,13 @@ checkLoginMentor();
                     <i class="fa-solid fa-list" style="color: #ffffff;"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a href="#">Hello User</a>
+                    <a href="#">Hello <?php echo $userName ?></a>
                 </div>
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="fa-solid fa-user me-2"></i>
+                    <a href="mentor-panel.php" class="sidebar-link">
+                        <i class="fa-solid fa-house me-2"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
@@ -59,14 +73,14 @@ checkLoginMentor();
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="fa-solid fa-gears me-2"></i>
-                        <span>Setting</span>
+                    <a href="discussions/messageStudents.php" class="sidebar-link">
+                        <i class="fa-solid fa-message me-2"></i></i>
+                        <span>Message Students</span>
                     </a>
                 </li>
             </ul>
             <div class="sidebar-footer">
-                <a href=".././logout.php" class="sidebar-link">
+                <a href="../logout.php" class="sidebar-link">
                     <i class="fa-solid fa-right-from-bracket me-2"></i>
                     <span>Logout</span>
                 </a>

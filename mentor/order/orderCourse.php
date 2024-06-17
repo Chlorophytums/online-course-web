@@ -5,6 +5,21 @@ include("../../middleware/session.php");
 // Batasi akses hanya untuk admin
 checkLoginMentor();
 
+$email = $_SESSION['email'];
+$query = "SELECT name FROM tbl_users WHERE email = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $userName = $row['name'];
+} else {
+    // Jika tidak ada data user, handle sesuai kebutuhan
+    $userName = "User";
+}
+
 $limit = 10; // Limit per page
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $start = ($page - 1) * $limit;
@@ -83,44 +98,44 @@ $result = $conn->query($sql);
                     <i class="fa-solid fa-list" style="color: #ffffff;"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a href="#">Hello Admin</a>
+                    <a href="#">Hello <?php echo $userName ?></a>
                 </div>
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="admin_dashboard.php" class="sidebar-link">
+                    <a href="../mentor-panel.php" class="sidebar-link">
                         <i class="fa-solid fa-house me-2"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="admin_articles.php" class="sidebar-link">
+                    <a href="articles.php" class="sidebar-link">
                         <i class="fa-solid fa-newspaper me-2"></i>
                         <span>Article</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="admin_videos.php" class="sidebar-link">
+                    <a href="#" class="sidebar-link">
                         <i class="fa-solid fa-circle-play me-2"></i>
                         <span>Video Content</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="admin_courses.php" class="sidebar-link">
+                    <a href="../courses/courses.php" class="sidebar-link">
                         <i class="fa-solid fa-graduation-cap me-2"></i>
                         <span>Course</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="admin_transactions.php" class="sidebar-link">
+                    <a href="../order/orderCourse.php" class="sidebar-link">
                         <i class="fa-solid fa-cart-shopping me-2"></i>
-                        <span>Transactions</span>
+                        <span>Order</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="admin_settings.php" class="sidebar-link">
-                        <i class="fa-solid fa-gears me-2"></i>
-                        <span>Setting</span>
+                    <a href="../discussions/messageStudents.php" class="sidebar-link">
+                        <i class="fa-solid fa-message me-2"></i></i>
+                        <span>Message Students</span>
                     </a>
                 </li>
             </ul>

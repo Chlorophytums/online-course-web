@@ -2,6 +2,21 @@
 require("../koneksi.php");
 include("../middleware/session.php");
 checkLoginStudent();
+
+$email = $_SESSION['email'];
+$query = "SELECT name FROM tbl_users WHERE email = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $userName = $row['name'];
+} else {
+    // Jika tidak ada data user, handle sesuai kebutuhan
+    $userName = "User";
+}
 ?>
 
 <!DOCTYPE html>
@@ -115,10 +130,10 @@ checkLoginStudent();
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item me-3">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="homepage.php">Home</a>
                     </li>
                     <li class="nav-item me-3">
-                        <a class="nav-link" href="article.php">Article</a>
+                        <a class="nav-link" href="articles/article.php">Article</a>
                     </li>
                     <li class="nav-item me-3">
                         <a class="nav-link" href="#">Video Content</a>
@@ -127,11 +142,15 @@ checkLoginStudent();
                         <a class="nav-link" href="forum-discussion/discussion.php">Discussion</a>
                     </li>
                     <li class="nav-item me-3">
-                        <a class="nav-link" href="courses.php">Courses</a>
+                        <a class="nav-link" href="courses/courses.php">Courses</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../login.php"><i class="fa-solid fa-right-to-bracket"></i>
-                            Logout</a>
+                    <li class="nav-item dropdown me-3">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?php echo $userName ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="../logout.php"></i>Logout</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>

@@ -1,7 +1,22 @@
 <?php
 require("../../koneksi.php"); // Sesuaikan dengan lokasi file koneksi.php Anda
 include("../../middleware/session.php");
+checkLoginMentor();
 
+$email = $_SESSION['email'];
+$query = "SELECT name FROM tbl_users WHERE email = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $userName = $row['name'];
+} else {
+    // Jika tidak ada data user, handle sesuai kebutuhan
+    $userName = "User";
+}
 function addCourse($title, $price, $description, $label, $image, $videos, $conn)
 {
     $conn->begin_transaction();
@@ -125,18 +140,18 @@ $conn->close();
                     <i class="fa-solid fa-list" style="color: #ffffff;"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a href="#">Hello User</a>
+                    <a href="#">Hello <?php echo $userName ?></a>
                 </div>
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="mentor-panel.php" class="sidebar-link">
+                    <a href="../mentor-panel.php" class="sidebar-link">
                         <i class="fa-solid fa-house me-2"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="articles.php" class="sidebar-link">
                         <i class="fa-solid fa-newspaper me-2"></i>
                         <span>Article</span>
                     </a>
@@ -148,21 +163,21 @@ $conn->close();
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="courses.php" class="sidebar-link">
+                    <a href="../courses/courses.php" class="sidebar-link">
                         <i class="fa-solid fa-graduation-cap me-2"></i>
                         <span>Course</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="../order/orderCourse.php" class="sidebar-link">
                         <i class="fa-solid fa-cart-shopping me-2"></i>
                         <span>Order</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="fa-solid fa-gears me-2"></i>
-                        <span>Setting</span>
+                    <a href="../discussions/messageStudents.php" class="sidebar-link">
+                        <i class="fa-solid fa-message me-2"></i></i>
+                        <span>Message Students</span>
                     </a>
                 </li>
             </ul>
