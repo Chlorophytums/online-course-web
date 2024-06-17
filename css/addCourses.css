@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.wrapper-content{
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    padding: 15px;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.box{
+    max-width: 500px;
+    background-color: #f3f3f3;
+    padding: 30px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.upload-area-title{
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.uploadLabel{
+    width: 100%;
+    min-height: 100px;
+    background: #ff8c0814;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px dashed #FF8A08;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.uploadLabel span{
+    font-size: 70px;
+    color: #ff8c0875;
+}
+
+.uploadLabel p{
+    color: #ff8c08b5;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: 'Poppins', sans-serif;
+}
+
+.uploaded{
+    margin: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #3131319e;
+}
+
+.showfilebox{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    padding: 10px 15px;
+    box-shadow: #0000000d 0px 0px 0px 1px, #d1d5db3d 0px 0px 0px 1px inset;
+}
+
+.showfilebox .left{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filetype{
+    background: #FF8A08;
+    color: #fff;
+    padding: 5px 15px;
+    font-size: 10px;
+    text-transform: capitalize;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.left h3{
+    font-weight: 400;
+    font-size: 16px;
+    margin: 0;
+}
+
+.right span{
+    width: 25px;
+    height: 25px;
+    font-size: 25px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #00000057;
+}
