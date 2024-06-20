@@ -1,6 +1,6 @@
 <?php
 require("koneksi.php");
-include("middleware/session.php");
+include("divider/session.php");
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
@@ -8,7 +8,7 @@ if (isset($_POST['login'])) {
 
     if (login($conn, $email, $password)) {
         // Ambil user_id dari database setelah login berhasil
-        $query = "SELECT id FROM tbl_users WHERE email = ?";
+        $query = "SELECT id FROM pengguna WHERE email = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -19,8 +19,8 @@ if (isset($_POST['login'])) {
         // Simpan user_id ke dalam sesi
         $_SESSION['user_id'] = $user_id;
 
-        if ($_SESSION['usertype'] == 'mentor') {
-            header("Location: mentor/mentor-panel.php");
+        if ($_SESSION['usertype'] == 'admin') {
+            header("Location: Admin/adminIndex.php");
             exit();
         } else {
             header("Location: student/homepage.php");
@@ -63,12 +63,6 @@ if (isset($_POST['signup'])) {
                     <?php if(isset($loginError)) { ?>
                         <div class="error"><?php echo $loginError; ?></div>
                     <?php } ?>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="#" class="social"><i class="fa-brands fa-google"></i></a>
-                        <a href="#" class="social"><i class="fa-brands fa-linkedin-in"></i></a>
-                    </div>
-                    <span>or use your account</span>
                     <div class="infield">
                         <input type="email" placeholder="Email" name="email" required/>
                         <label></label>
@@ -77,7 +71,6 @@ if (isset($_POST['signup'])) {
                         <input type="password" placeholder="Password" name="password" required />
                         <label></label>
                     </div>
-                    <a href="#" class="forgot">Forgot your password?</a>
                     <button type="submit" name="login">Sign In</button>
                 </form>
             </div>
@@ -86,20 +79,14 @@ if (isset($_POST['signup'])) {
         <div class="form-container sign-up-container">
             <form action="#" method="POST">
                 <h1>Create Account</h1>
-                <!-- show message signup -->
+             
                 <?php if(isset($signupSuccess)) { ?>
                     <div class="success"><?php echo $signupSuccess; ?></div>
                 <?php } ?>
                 <?php if(isset($signupError)) { ?>
                     <div class="error"><?php echo $signupError; ?></div>
                 <?php } ?>
-                <!-- end show msg -->
-                <div class="social-container">
-                    <a href="#" class="social"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" class="social"><i class="fa-brands fa-google"></i></a>
-                    <a href="#" class="social"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email for registration</span>
+               
                 <div class="infield">
                     <input type="text" placeholder="Name" name="name" required/>
                     <label></label>

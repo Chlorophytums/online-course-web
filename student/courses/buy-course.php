@@ -1,11 +1,11 @@
 <?php
 require("../../koneksi.php");
-include("../../middleware/session.php");
-checkLoginStudent();
+include("../../divider/session.php");
+checkLoginUser();
 
 // Kode untuk mengambil nama dari database
 $email = $_SESSION['email'];
-$query = "SELECT name FROM tbl_users WHERE email = ?";
+$query = "SELECT name FROM pengguna WHERE email = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -30,8 +30,8 @@ if (!$course_id) {
 
 // Query untuk mengambil data kursus berdasarkan ID
 $query = "SELECT c.*, f.file_path
-            FROM tbl_courses c
-            JOIN tbl_course_files f ON c.id = f.course_id
+            FROM kelas c
+            JOIN file_kelas f ON c.id = f.course_id
             WHERE c.id = ? AND f.file_type = 'image'";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $course_id);
@@ -167,21 +167,24 @@ $stmt->close();
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item me-3">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="../homepage.php">Home</a>
                     </li>
                     <li class="nav-item me-3">
                         <a class="nav-link" href="../articles/article.php">Article</a>
                     </li>
                     <li class="nav-item me-3">
-                        <a class="nav-link" href="#">Video Content</a>
+                        <a class="nav-link" href="../video-content/video-content.php">Video Content</a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link" href="../forum-discussion/discussion.php">Discussion</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="courses.php">Course</a>
+                        <a class="nav-link" href="../courses/courses.php">Courses</a>
                     </li>
                     <li class="nav-item dropdown me-3">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="myCourse.php">My course</a></li>
+                            <li><a class="dropdown-item" href="../courses/myCourse.php">My course</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown me-3">
@@ -189,7 +192,7 @@ $stmt->close();
                             <?php echo $userName ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#"></i>Logout</a></li>
+                            <li><a class="dropdown-item" href="../../logout.php"></i>Logout</a></li>
                         </ul>
                     </li>
                 </ul>

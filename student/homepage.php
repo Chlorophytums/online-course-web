@@ -1,10 +1,10 @@
 <?php
 require("../koneksi.php");
-include("../middleware/session.php");
-checkLoginStudent();
+include("../divider/session.php");
+checkLoginUser();
 
 $email = $_SESSION['email'];
-$query = "SELECT name FROM tbl_users WHERE email = ?";
+$query = "SELECT name FROM pengguna WHERE email = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -29,95 +29,6 @@ if ($result->num_rows > 0) {
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../css/homepage.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-        body{
-            font-family: 'Poppins', sans-serif !important;
-        }
-
-        .main-color{
-            background-image: linear-gradient(to bottom, rgb(255, 138, 8), rgb(255, 101, 0));
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
-            color: white !important;
-        }
-        .nav-link{
-            font-weight: 500 !important;
-            color: white !important;
-            transition: .3s !important;
-        }
-
-        .nav-link:hover{
-            scale: .9;
-        }
-        
-        .wrapper {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        .kolom {
-            margin-top: 20px;
-        }
-
-        .kolom h2 {
-            margin-top: 10px;
-        }
-
-        .tbl-pink,
-        .tbl-biru {
-            display: inline-block;
-            padding: 10px 20px;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .tbl-pink {
-            background-color: #e91e63;
-        }
-
-        .tbl-biru {
-            background-color: #007bff;
-        }
-
-        .courses-list {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .kartu-course {
-            flex: 1 1 calc(25% - 20px);
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            overflow: hidden;
-            text-align: center;
-            background-color: #f8f9fa;
-        }
-
-        .kartu-course img {
-            width: 100%;
-            height: auto;
-        }
-
-        .kartu-course p {
-            padding: 10px;
-        }
-
-        #copyright {
-            background-color: #343a40;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body>
@@ -133,16 +44,22 @@ if ($result->num_rows > 0) {
                         <a class="nav-link active" aria-current="page" href="homepage.php">Home</a>
                     </li>
                     <li class="nav-item me-3">
-                        <a class="nav-link" href="articles/article.php">Article</a>
+                        <a class="nav-link" href="articles/article.php">Berita</a>
                     </li>
                     <li class="nav-item me-3">
-                        <a class="nav-link" href="#">Video Content</a>
+                        <a class="nav-link" href="video-content/video-content.php">Kelas</a>
                     </li>
                     <li class="nav-item me-3">
-                        <a class="nav-link" href="forum-discussion/discussion.php">Discussion</a>
+                        <a class="nav-link" href="forum-discussion/discussion.php">Komunitas</a>
                     </li>
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="courses/courses.php">Courses</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="courses/courses.php">Kelas Saya</a>
+                    </li>
+                    <li class="nav-item dropdown me-3">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="myCourse.php">My course</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item dropdown me-3">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -159,55 +76,25 @@ if ($result->num_rows > 0) {
     <div class="wrapper">
         <!-- Home Section -->
         <section id="home" class="text-center">
-            <img src="https://img.freepik.com/free-vector/web-development-programmer-engineering-coding-website-augmented-reality-interface-screens-developer-project-engineer-programming-software-application-design-cartoon-illustration_107791-3863.jpg?size=626&ext=jpg&ga=GA1.2.1769275626.1605867161" class="img-fluid" alt="Web Development">
+            <img src="https://www.freepik.com/free-vector/recycle-colorful-geometric-gradient-logo-vector_27230675.htm#fromView=search&page=1&position=14&uuid=39edaa9e-ae94-4551-9dcd-39a4016ea80a" class="img-fluid" alt="Web Development">
             <div class="kolom">
-                <p class="deskripsi">Edukasi dan Pelatihan Teknologi</p>
-                <h2>Kembangkan Skill dan Pengetahuan Anda</h2>
-                <p>Techion adalah platform komprehensif yang menyediakan berbagai kursus online interaktif untuk meningkatkan keterampilan teknologi pengguna. Fitur-fiturnya meliputi artikel terkait, konten video, kursus online, dan forum komunitas.</p>
-                <p><a href="#" class="tbl-pink">Pelajari Lebih Lanjut</a></p>
+                <p class="deskripsi">Pelatihan Daur Ulang Sampah Plastik</p>
+                <h2>Membuat Kerajinan untuk Lingkungan Kita !!</h2>
+                <p>CRAVIRO adalah platform pelatihan online yang bisa membantu anda menghasilkan berbagai kerajinan dari bahan sampah untuk membantu lingkungan kita</p>
             </div>
         </section>
 
         <!-- Article and Video Content Section -->
         <section id="articlevideo" class="text-center mt-5">
             <div class="kolom">
-                <p class="deskripsi">You Will Need This</p>
-                <h2>Articles and Video Content</h2>
-                <p>Menyediakan fitur artikel yang mencakup beragam topik mulai dari tren industri terbaru hingga panduan mendalam tentang teknologi spesifik, ditulis oleh pakar untuk memperkaya pengetahuan pengguna.</p>
-                <p>Video konten meliputi tutorial langkah-demi-langkah, webinar interaktif, studi kasus nyata, penjelasan konsep, wawancara dengan ahli, review produk teknologi, latihan coding, dan penugasan praktis, semuanya dirancang untuk memberikan pembelajaran yang komprehensif dan aplikatif.</p>
+                <p class="deskripsi">Ketahui Lebih Banyak Tentang Kami</p>
+                <h2>Puluhan Kelas Terbaik DIpersiapkan untuk Anda</h2>
+                <p>Craviro menyediakan berbagai fitur yang dapat mempermudah Anda untuk mengetahui berbagai hal terkait pengolahan sampah. Mari menjelajahi dunia pengolahan sampah bersama ribuan orang antusias lainnya !!</p>
                 <p><a href="#" class="tbl-biru">Pelajari Lebih Lanjut</a></p>
             </div>
-            <img src="https://img.freepik.com/free-vector/online-learning-isometric-concept_1284-17947.jpg?size=626&ext=jpg&ga=GA1.2.1769275626.1605867161" class="img-fluid" alt="Online Learning">
+            <img src="https://www.freepik.com/free-vector/female-student-listening-webinar-online_9175118.htm#fromView=search&page=1&position=12&uuid=928738ae-f13b-459b-9c47-4d0c918164bf" class="img-fluid" alt="Online Learning">
         </section>
 
-        <!-- Top Courses Section -->
-        <section id="course" class="text-center mt-5">
-            <div class="tengah">
-                <div class="kolom">
-                    <p class="deskripsi">Our Top Courses</p>
-                    <h2>Courses</h2>
-                    <p> Menawarkan konten multimedia interaktif oleh mentor berpengalaman dan sertifikasi digital yang dapat diunduh setelah menyelesaikan kursus, serta akses mobile dan offline untuk belajar kapan saja dan di mana saja.</p>
-                </div>
-                <div class="courses-list">
-                    <div class="kartu-course">
-                        <img src="../img/pemweb.jpg" alt="Pemrograman Web">
-                        <p>Pemrograman Web</p>
-                    </div>
-                    <div class="kartu-course">
-                        <img src="../img/pemmob.png" alt="Pemrograman Mobile">
-                        <p>Pemrograman Mobile</p>
-                    </div>
-                    <div class="kartu-course">
-                        <img src="../img/dataanalis.jpg" alt="Data Analis">
-                        <p>Data Analis</p>
-                    </div>
-                    <div class="kartu-course">
-                        <img src="../img/uiux.jpg" alt="UI/UX">
-                        <p>UI/UX</p>
-                    </div>
-                </div>
-            </div>
-        </section>
     </div>
 
     <footer id="copyright">
